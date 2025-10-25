@@ -1,4 +1,4 @@
-
+import random
 
 #fuction to create flights
 flights = []
@@ -15,9 +15,6 @@ def create_flight(code, origin, destination, price, row, column):
     
 
 print(create_flight("M","A","B",0, 3,3 ))
-print(create_flight("S","A","B",0, 3,3))
-print(create_flight("D","A","B",0, 3,3))
-print(create_flight("F","A","B",0, 3,3))
 
 #E: a integer
 #S: one list inside the main list of the program
@@ -29,8 +26,8 @@ def get_flight(index):
 #S: a new matrix with the selected seat occupied
 def book_flight(row,column,index):
     matrix = flights[index][4]  #to look the matrix inside the flight selected of index of flights
-   
-   
+    if row >= len(matrix) or column >= len(matrix[0]) or row < 0 or column < 0:
+        return f"Ingrese un valor dentro del rango."
     for _ in range(len(matrix)):
         for _ in range(len(matrix[0])):
 
@@ -47,7 +44,14 @@ def book_flight(row,column,index):
 
 print(book_flight(0,0,0))
 print(book_flight(0,1,0))
-print(book_flight(0,1,0))
+print(book_flight(0,2,0))
+print(book_flight(1,0,0))
+print(book_flight(1,1,0))
+print(book_flight(1,2,0))
+print(book_flight(2,0,0))
+print(book_flight(2,1,0))
+print(book_flight(2,2,0))
+
 
 
 
@@ -66,6 +70,9 @@ def cancel_flight(row,column,index):
                 
     flights[index][4] == matrix
 
+
+def calcute_percentage(matrix,total_seat):
+    return (matrix/total_seat)*100
 #E: get the number of flight
 #S: all data inside the lists in a string
 #R: the correct flight
@@ -80,13 +87,11 @@ def statics(index_flight):
     for _ in range(len(matrix)):
         for _ in range(len(matrix[0])):
             total_seat += 1
-    collection_percent = (flights[index_flight][-1]/total_seat)*100
+    collection_percent = calcute_percentage(flights[index_flight][-1],total_seat)
     collection_percent = round(collection_percent,2)
-    return f" ocupancy percentaje {collection_percent}%: "
+    return  [code_flight, origin, destination, price, total_seat, collection_percent]
 
 print(statics(0))
-
-
 
 
 
