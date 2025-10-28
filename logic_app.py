@@ -111,3 +111,32 @@ def revenue_stats(index_flight):
 
    return [code_flight, origin, destination, price, total_collected]
 
+
+def available_flights():
+    list_flights = []
+
+    if not flights:
+        return []
+
+    for i in range(len(flights)):
+        vuelo = flights[i]
+        codigo, origen, destino, precio, matriz_asientos, vendidos = vuelo
+
+        filas = len(matriz_asientos)
+        columnas = len(matriz_asientos[0]) if matriz_asientos else 0  # en una línea
+        total_asientos = filas * columnas
+        libres = total_asientos - vendidos
+
+        list_flights.append([
+            f"Vuelo {i + 1}",
+            codigo,
+            origen,
+            destino,
+            precio,
+            total_asientos,
+            libres
+        ])
+
+    return list_flights
+
+
