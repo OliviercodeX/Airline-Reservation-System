@@ -24,7 +24,7 @@ def get_flight(index):
 
 #E: row, column, index
 #S: a new matrix with the selected seat occupied
-def book_flight(row,column,index):
+def book_flight(row,column,index): #version convencional de reservar individualmente
     
     matrix = flights[index][4]  #to look the matrix inside the flight selected of index of flights
     lenght_row = len(matrix)
@@ -44,18 +44,6 @@ def book_flight(row,column,index):
                 
             else:
                 return "El campo esta ocupado"
-    
-
-print(book_flight(0,0,0))
-print(book_flight(0,1,0))
-print(book_flight(0,2,0))
-print(book_flight(1,0,0))
-print(book_flight(1,1,0))
-print(book_flight(1,2,0))
-print(book_flight(2,0,0))
-print(book_flight(2,1,0))
-print(book_flight(2,2,0))
-
 
 
 
@@ -94,18 +82,32 @@ def statics(index_flight):
     code_flight = flights[index_flight][0]
     origin =  flights[index_flight][1]
     destination = flights[index_flight][2]
-    price = flights[index_flight][3]
     total_seat = count_seat_matrix(matrix)
 
     collection_percent = calcute_percentage(flights[index_flight][-1],total_seat)
     
-    return  [code_flight, origin, destination, price, total_seat, collection_percent]
-
-print(statics(0))
+    return  [code_flight, origin, destination, total_seat, collection_percent]
 
 
-def revenue_stats():
-    pass
+
+def ticket_sold(matrix):
+    count = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1:
+                count += 1
+
+    return count
 
 
+def revenue_stats(index_flight):
+   matrix = flights[index_flight][4]  #la matriz de asientos
+   code_flight = flights[index_flight][0]    #el codigo del vuelo
+   origin =  flights[index_flight][1]   #el origen
+   destination = flights[index_flight][2] #el destino
+   price = flights[index_flight][3]       #precio de boleto
+   tickets = ticket_sold(matrix)          #boletos vendidos
+   total_collected = tickets * price      #total recaudado
+
+   return [code_flight, origin, destination, price, total_collected]
 
