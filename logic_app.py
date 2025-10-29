@@ -46,6 +46,63 @@ def book_flight(row,column,index): #version convencional de reservar individualm
                 return "El campo esta ocupado"
 
 
+def all_are_one(row, matrix):
+    if row < 0 or row >= len(matrix):
+        return False
+    
+    for i in range (len(matrix[0])):
+        if matrix[row][i] == 0:
+            return False
+    return True
+
+
+
+
+def book_consutive_seats(index_flight,row, start_colum, amount_seats):
+    matrix = flights[index_flight][4] #es la matriz de asientos
+
+    column_matrix = len(matrix[0])
+    seats_free = 0
+    
+    if not isinstance(index_flight, int) or not isinstance(amount_seats, int): #si no es un entero
+        return "Error: número de vuelo y cantidad deben ser enteros."
+    
+    if index_flight < 0 or index_flight >= len(flights): #si se el parametro ingresado 
+        return "Error: el vuelo no existe."                 #no esta en el rango
+
+    
+    if all_are_one(row, matrix): #si todos son uno tira error
+        return "Todos los asientos están ocupados"
+    
+    if amount_seats > column_matrix or amount_seats <= 0:#si a cantidad es mayor o menor a cero
+        return "Error: cantidad de asientos inválida."
+
+    if start_colum + amount_seats > column_matrix: #si se sale de rango
+        return "Error: no hay espacio suficiente en esa fila."
+
+    for i in range(start_colum, start_colum + amount_seats):
+    
+        if matrix[row][i] == 0:
+            seats_free += 1
+        else:
+            break
+    
+    if seats_free == amount_seats:
+
+        for i in range(start_colum, start_colum + amount_seats):
+            matrix[row][i] = 1
+        return "Reservados exitosamente"
+    else:
+        return "No se pudo reservar los asientos exitosamamente"
+
+        
+
+
+        
+
+
+
+
 
 #E: row, column, index
 #S: a new matrix without that seat ocuppied
