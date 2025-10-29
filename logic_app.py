@@ -29,6 +29,8 @@ def book_flight(row,column,index): #version convencional de reservar individualm
     matrix = flights[index][4]  #to look the matrix inside the flight selected of index of flights
     lenght_row = len(matrix)
     lenght_column = len(matrix[0])
+    taking_seats = flights[index][-1]
+    
 
     if row >= lenght_row or column >= lenght_column or row < 0 or column < 0:
         return f"Ingrese un valor dentro del rango."
@@ -38,14 +40,14 @@ def book_flight(row,column,index): #version convencional de reservar individualm
 
             if matrix[row][column] == 0:  #if the number keep going 0 get chance it by 1
                 matrix[row][column] = 1
-                flights[index][-1] += 1
-                flights[index][4] = matrix
+                taking_seats += 1
                 return "Asiento reservado"
                 
             else:
                 return "El campo esta ocupado"
 
-
+#E: integer and matrix
+#S: boolean value
 def all_are_one(row, matrix):
     if row < 0 or row >= len(matrix):
         return False
@@ -56,7 +58,8 @@ def all_are_one(row, matrix):
     return True
 
 
-
+#E: index_flight, row, start column and amount seats = int
+#S: a new matrix with
 
 def book_consutive_seats(index_flight,row, start_colum, amount_seats):
     matrix = flights[index_flight][4] #es la matriz de asientos
@@ -95,30 +98,26 @@ def book_consutive_seats(index_flight,row, start_colum, amount_seats):
     else:
         return "No se pudo reservar los asientos exitosamamente"
 
-        
-
-
-        
-
-
-
-
 
 #E: row, column, index
 #S: a new matrix without that seat ocuppied
 
 def cancel_flight(row,column,index):
     matrix = flights[index][4]
-
+                                                    #todo Revisar función
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
 
             if matrix[row][column] != 0:
                 matrix[row][column] == 0
-                
-                
-    flights[index][4] == matrix
 
+#_________________________________________________________________________________________________________
+#sección para la función de venta masiva
+
+def simulate_mass_booking():
+    pass
+
+#___________________________________________________________________________________________________________
 
 def calcute_percentage(matrix,total_seat):
     return  round((matrix / total_seat) * 100, 2)
@@ -197,3 +196,8 @@ def get_available_flights():
     return available_flights
 
 
+#_______________________________________________________________________________________________________
+#sección para la función de buscar vuelos y demas funcionalidades de esta
+
+
+#_______________________________________________________________________________________________________
