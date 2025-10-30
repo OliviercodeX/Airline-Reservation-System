@@ -2,7 +2,7 @@ import random
 
 #fuction to create flights
 flights = []
-People = [[]]
+
 
 #E: code(string), origin(string), destination(string), price(float), price(integer), column,column(integer), sold_count(int)
 #S: a list with new elements
@@ -13,11 +13,17 @@ def create_flight(row, column):
         return "Has sobrepasado el limite maximo permitido row: 50, column:20"
     flights.append(["","","", 0, seat_matrix,0])
     
-def assign_flight(code, origin, destination, price):
-    flights[0] = code
-    flights[1] = origin
-    flights[2] = destination
-    flights[3] = price
+
+
+def assign_flight(code, origin, destination, price, index_flight):
+    if index_flight < 0 or index_flight >= len(flights):
+        return "Invalid flight number."
+    flight = flights[index_flight]
+    flight[0] = code
+    flight[1] = origin
+    flight[2] = destination
+    flight[3] = price
+
 
 
 #E: a integer
@@ -202,6 +208,25 @@ def get_available_flights():
 
 #_______________________________________________________________________________________________________
 #sección para la función de buscar vuelos y demas funcionalidades de esta
+
+def counts_seats_free(matrix):
+    result = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+           if matrix[i][j] == 0:
+            result += 1
+    return result
+
+
+def search_flights_by_destination(destination):
+    result = []
+    for flight in range(len(flights)):
+        
+        seats_free = counts_seats_free(flights[flight][4])
+        destination_flight = flights[flight][2]
+        if destination_flight.lower() == destination.lower():
+            result.append((flight+1, seats_free) )
+    return result
 
 
 #_______________________________________________________________________________________________________
