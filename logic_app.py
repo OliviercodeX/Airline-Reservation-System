@@ -7,14 +7,18 @@ People = [[]]
 #E: code(string), origin(string), destination(string), price(float), price(integer), column,column(integer), sold_count(int)
 #S: a list with new elements
 #R: only if the row is less than 50 and row 20
-def create_flight(code, origin, destination, price, row, column):
-    seat_matrix = [[0]*row for i in range(column)]
+def create_flight(row, column):
+    seat_matrix = [[0]*row for _ in range(column)]
     if row > 50 and column > 20:
         return "Has sobrepasado el limite maximo permitido row: 50, column:20"
-    flights.append([code,origin,destination, price, seat_matrix,0])
+    flights.append(["","","", 0, seat_matrix,0])
     
+def assign_flight(code, origin, destination, price):
+    flights[0] = code
+    flights[1] = origin
+    flights[2] = destination
+    flights[3] = price
 
-print(create_flight("M","A","B",0, 3,3 ))
 
 #E: a integer
 #S: one list inside the main list of the program
