@@ -12,7 +12,8 @@ def create_flight(row, column):
     if row > 50 and column > 20:
         return "Has sobrepasado el limite maximo permitido row: 50, column:20"
     flights.append(["","","", 0, seat_matrix,0])
-    
+
+create_flight(5,5)
 
 def assign_flight(code, origin, destination, price, index_flight):
     if index_flight < 0 or index_flight >= len(flights):
@@ -22,7 +23,7 @@ def assign_flight(code, origin, destination, price, index_flight):
     flight[1] = origin
     flight[2] = destination
     flight[3] = price
-
+assign_flight("a77","CR", "Chile", 3, 0)
 
 #E: a integer
 #S: one list inside the main list of the program
@@ -121,6 +122,22 @@ def cancel_flight(row,column,index):
 
 #_________________________________________________________________________________________________________
 #sección para la función de venta masiva
+def ticket_sold(matrix):
+    count = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1:
+                count += 1
+
+    return count
+
+def count_seat_matrix(matrix):
+    counter = 0
+    for _ in range(len(matrix)):
+        for _ in range(len(matrix[0])):
+            counter += 1
+    return counter
+
 
 def simulate_mass_booking(flights, percentage):
     if not flights:
@@ -130,11 +147,13 @@ def simulate_mass_booking(flights, percentage):
         return "Ingrese un porcentaje dentro del rango de 1 a 100"
     
     for flight in range(len(flights)):
-            print(flight)
-            matrix = flight[4]
+            
+
+            matrix = flights[flight][4]
+
             current_occupied = ticket_sold(matrix)   #cantidad de asientos ocupados antes 
             total_seats = count_seat_matrix(matrix) #cantidad de asientos de la matriz
-
+            
             target_occupied = int((percentage/100) * total_seats)  #total de asientos que deben estar ocupados al final
             seats_remaining = target_occupied -current_occupied  #asientos que faltan para llegar a la meta 
 
@@ -145,28 +164,18 @@ def simulate_mass_booking(flights, percentage):
             while seats_remaining > 0:
 
                 row_random = random.randint(0, len(matrix)-1)    #pos aleatoria
-                column_random = random.randint(0, len(matrix[0]-1))  #columna pos aleatoria
+                column_random = random.randint(0, len(matrix[0])-1)  #columna pos aleatoria
 
                 if matrix[row_random][column_random] == 0:    
-                            matrix[row_random][column_random] == 1
+                            matrix[row_random][column_random] = 1
 
                             seats_remaining -= 1
 
     return "Venta masiva hecha correctamente"
 
-print(simulate_mass_booking(flights, 40))
+print(simulate_mass_booking(flights, 100))
             
-
-
-
-            
-
-
-
-
-    
-    
-
+print(flights)
 #___________________________________________________________________________________________________________
 
 def calcute_percentage(matrix,total_seat):
