@@ -14,7 +14,6 @@ def create_flight(row, column):
     flights.append(["","","", 0, seat_matrix,0])
     
 
-
 def assign_flight(code, origin, destination, price, index_flight):
     if index_flight < 0 or index_flight >= len(flights):
         return "Invalid flight number."
@@ -23,7 +22,6 @@ def assign_flight(code, origin, destination, price, index_flight):
     flight[1] = origin
     flight[2] = destination
     flight[3] = price
-
 
 
 #E: a integer
@@ -124,8 +122,50 @@ def cancel_flight(row,column,index):
 #_________________________________________________________________________________________________________
 #sección para la función de venta masiva
 
-def simulate_mass_booking():
-    pass
+def simulate_mass_booking(flights, percentage):
+    if not flights:
+        return "No hay vuelos disponibles aún"
+    
+    if percentage > 100 and percentage < 1:
+        return "Ingrese un porcentaje dentro del rango de 1 a 100"
+    
+    for flight in range(len(flights)):
+            print(flight)
+            matrix = flight[4]
+            current_occupied = ticket_sold(matrix)   #cantidad de asientos ocupados antes 
+            total_seats = count_seat_matrix(matrix) #cantidad de asientos de la matriz
+
+            target_occupied = int((percentage/100) * total_seats)  #total de asientos que deben estar ocupados al final
+            seats_remaining = target_occupied -current_occupied  #asientos que faltan para llegar a la meta 
+
+            if seats_remaining <= 0:
+                continue
+
+
+            while seats_remaining > 0:
+
+                row_random = random.randint(0, len(matrix)-1)    #pos aleatoria
+                column_random = random.randint(0, len(matrix[0]-1))  #columna pos aleatoria
+
+                if matrix[row_random][column_random] == 0:    
+                            matrix[row_random][column_random] == 1
+
+                            seats_remaining -= 1
+
+    return "Venta masiva hecha correctamente"
+
+print(simulate_mass_booking(flights, 40))
+            
+
+
+
+            
+
+
+
+
+    
+    
 
 #___________________________________________________________________________________________________________
 
