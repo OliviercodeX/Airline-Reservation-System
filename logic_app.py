@@ -7,6 +7,33 @@ flights = []
 
 
 
+def generate_seat_labels(rows, columns):
+    """
+    Genera etiquetas de asientos tipo A1, A2... AA1, AB1, etc.
+    según las filas y columnas del vuelo.
+    """
+    seat_labels = []
+    letters = []
+
+    # Generar letras de la A a la Z, luego AA, AB, etc.
+    for i in range(rows):
+        if i < 26:
+            letters.append(chr(65 + i))  # 65 = 'A'
+        else:
+            first = chr(65 + (i // 26) - 1)
+            second = chr(65 + (i % 26))
+            letters.append(first + second)
+
+    # Combinar letras con números de columna
+    for letter in letters:
+        row_labels = []
+        for col in range(1, columns + 1):
+            label = f"{letter}{col}"
+            row_labels.append(label)
+        seat_labels.append(row_labels)
+
+    return seat_labels
+
 
 def generate_code(flights, origin, destination):
     # Prefijo: iniciales de origen y destino o "FL"
@@ -32,12 +59,14 @@ def generate_code(flights, origin, destination):
 #S: a list with new elements
 #R: only if the row is less than 50 and row 20
 def create_flight(row, column):
-    seat_matrix = [[0]*row for _ in range(column)]
+
     if row > 50 and column > 20:
         return "Has sobrepasado el limite maximo permitido row: 50, column:20"
-    flights.append(["","","", 0, seat_matrix,0])
+    seat_matrix = [[0]*row for _ in range(column)]
+    seat_labels = generate_seat_labels(row, column)
+    flights.append(["","","", 0, seat_matrix,0,seat_labels])
 
-create_flight(5,5)
+
 
 def assign_flight(origin, destination, price, index_flight):
     if index_flight < 0 or index_flight >= len(flights):
@@ -50,7 +79,7 @@ def assign_flight(origin, destination, price, index_flight):
     flight[1] = origin
     flight[2] = destination
     flight[3] = price
-assign_flight("Costa Rica", "Chile", 3, 0)
+
 
 
 
@@ -202,9 +231,7 @@ def simulate_mass_booking(flights, percentage):
 
     return "Venta masiva hecha correctamente"
 
-print(simulate_mass_booking(flights, 50))
-for i in flights:    
- print(flights)
+
 #___________________________________________________________________________________________________________
 
 def calcute_percentage(matrix,total_seat):
