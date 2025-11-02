@@ -1,8 +1,32 @@
 import random
+import string
 
 #fuction to create flights
 flights = []
 
+
+
+
+
+def generate_code(flights, origin, destination):
+    # Prefijo: iniciales de origen y destino o "FL"
+    if origin and destination:
+        prefix = origin[0].upper() + destination[0].upper()
+    else:
+        prefix = "FL"
+
+    # Obtener todos los códigos existentes
+    existing_codes = [f[0] for f in flights]
+
+    # Generar hasta que sea único
+    while True:
+        letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+        numbers = str(random.randint(1, 999)).zfill(3)
+        new_code = prefix + letters + numbers
+
+        # Verificar que no esté ya en la lista
+        if new_code not in existing_codes:
+            return new_code
 
 #E: code(string), origin(string), destination(string), price(float), price(integer), column,column(integer), sold_count(int)
 #S: a list with new elements
@@ -15,15 +39,20 @@ def create_flight(row, column):
 
 create_flight(5,5)
 
-def assign_flight(code, origin, destination, price, index_flight):
+def assign_flight(origin, destination, price, index_flight):
     if index_flight < 0 or index_flight >= len(flights):
         return "Invalid flight number."
+        # Generar el código automáticamente
+    code = generate_code(flights, origin, destination)
+
     flight = flights[index_flight]
     flight[0] = code
     flight[1] = origin
     flight[2] = destination
     flight[3] = price
-assign_flight("a77","CR", "Chile", 3, 0)
+assign_flight("Costa Rica", "Chile", 3, 0)
+
+
 
 #E: a integer
 #S: one list inside the main list of the program
@@ -173,9 +202,9 @@ def simulate_mass_booking(flights, percentage):
 
     return "Venta masiva hecha correctamente"
 
-print(simulate_mass_booking(flights, 100))
-            
-print(flights)
+print(simulate_mass_booking(flights, 50))
+for i in flights:    
+ print(flights)
 #___________________________________________________________________________________________________________
 
 def calcute_percentage(matrix,total_seat):
