@@ -1,26 +1,40 @@
 import customtkinter as ctk
+import random
 
-LETTER = "Times New Roman"
-SIZE = 20
-
+def close_window():
+    app.withdraw()
 
 def main_window():
-    ctk.set_appearance_mode("System")
-    ctk.set_default_color_theme("blue")
-
+    global app
     app = ctk.CTk()
-    app.geometry("500x400")
-    app.title("Test customtkinter")
+    app.geometry("800x600")
+    app.title("Airline System")
+    app.resizable(False,False)
 
-    # Usar solo grid() — no mezclar pack() y grid()
-    label = ctk.CTkLabel(app, text="Bienvenido", font=(LETTER, SIZE))
-    label.grid(row=0, column=10, columnspan=2, pady=(12, 8), padx=12)
+    # Buttons
+    # Botón de cierre situado en la esquina superior derecha
+    exit_button = ctk.CTkButton(
+        app,
+        text="Salir",
+        command=close_window,
+        width=90,
+        height=32,
+        corner_radius=8,
+        font=("Times New Roman", 16)
+    )
 
-    button = ctk.CTkButton(app, text="Cerrar", command=app.destroy)
-    button.grid(row=1, column=10, padx=12, pady=8, sticky='w')
+    # Colocar en la esquina superior derecha (relx=1.0 es el borde derecho)
+    exit_button.place(relx=1.0, x=-10, y=10, anchor='ne')
+
+
+
 
     app.mainloop()
+    
 
 
-if __name__ == '__main__':
+
+
+
+if __name__ == "__main__":
     main_window()
