@@ -4,9 +4,6 @@ import string
 #fuction to create flights
 flights = []
 
-
-
-
 def generate_seat_labels(rows, columns):
     """
     Genera etiquetas de asientos tipo A1, A2... AA1, AB1, etc.
@@ -176,7 +173,7 @@ def cancel_flight(row,column,index):
         for j in range(len(matrix[0])):
 
             if matrix[row][column] != 0:
-                matrix[row][column] == 0
+                matrix[row][column] = 0
 
 #_________________________________________________________________________________________________________
 #sección para la función de venta masiva
