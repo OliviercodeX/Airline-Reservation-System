@@ -4,9 +4,6 @@ import string
 #fuction to create flights
 flights = []
 
-
-
-
 def generate_seat_labels(rows, columns):
     """
     Genera etiquetas de asientos tipo A1, A2... AA1, AB1, etc.
@@ -35,54 +32,42 @@ def generate_seat_labels(rows, columns):
     return seat_labels
 
 
-def generate_code(flights, origin, destination):
-    # Prefijo: iniciales de origen y destino o "FL"
-    if origin and destination:
-        prefix = origin[0].upper() + destination[0].upper()
-    else:
-        prefix = "FL"
-
-    # Obtener todos los códigos existentes
-    existing_codes = [f[0] for f in flights]
-
-    # Generar hasta que sea único
-    while True:
-        letters = ''.join(random.choices(string.ascii_uppercase, k=2))
-        numbers = str(random.randint(1, 999)).zfill(3)
-        new_code = prefix + letters + numbers
-
-        # Verificar que no esté ya en la lista
-        if new_code not in existing_codes:
-            return new_code
-
 #E: code(string), origin(string), destination(string), price(float), price(integer), column,column(integer), sold_count(int)
 #S: a list with new elements
 #R: only if the row is less than 50 and row 20
-def create_flight(row, column):
+def create_flight(row,column):
 
-    if row > 50 and column > 20:
+    if row > 50 or column > 20:
         return "Has sobrepasado el limite maximo permitido row: 50, column:20"
-    seat_matrix = [[0]*row for _ in range(column)]
+    seat_matrix = [[0]*column for _ in range(row)]
     seat_labels = generate_seat_labels(row, column)
     flights.append(["","","", 0, seat_matrix,0,seat_labels])
 
 
 
-def assign_flight(origin, destination, price, index_flight):
+
+
+def assign_flight(origin, destination, price, index_flight, code):
+    """
+    Asigna datos a un vuelo existente. Ahora requiere un `code` manual.
+    Retorna un mensaje de error (string) en caso de fallo, o None en caso exitoso.
+    """
     if index_flight < 0 or index_flight >= len(flights):
         return "Invalid flight number."
-        # Generar el código automáticamente
-    code = generate_code(flights, origin, destination)
+
+    if not code or not isinstance(code, str):
+        return "Se requiere un código de vuelo válido."
+
+    # Verificar que el código no exista en otro vuelo
+    for i, f in enumerate(flights):
+        if i != index_flight and isinstance(f, list) and f and f[0] and f[0].upper() == code.upper():
+            return "El código ya está en uso por otro vuelo."
 
     flight = flights[index_flight]
     flight[0] = code
     flight[1] = origin
     flight[2] = destination
     flight[3] = price
-
-
-
-
 #E: a integer
 #S: one list inside the main list of the program
 def get_flight(index):
@@ -107,7 +92,7 @@ def book_flight(row,column,index): #version convencional de reservar individualm
 
             if matrix[row][column] == 0:  #if the number keep going 0 get chance it by 1
                 matrix[row][column] = 1
-                taking_seats += 1
+                
                 return "Asiento reservado"
                 
             else:
