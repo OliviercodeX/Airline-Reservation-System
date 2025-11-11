@@ -153,7 +153,7 @@ def crear_ventana_nuevo_vuelo():
     marco_botones.pack(pady=10)
     
     ctk.CTkButton(marco_botones, text="Crear Vuelo", command=guardar_vuelo).pack(side="left", padx=5)
-    ctk.CTkButton(marco_botones, text="Cancelar", command=ventana.destroy).pack(side="left", padx=5)
+    ctk.CTkButton(marco_botones, text="Volver", command=lambda: cerrar_ventana_secundaria(ventana)).pack(side="left", padx=5)
 
 def crear_ventana_asignar_datos():
     ventana_principal.withdraw()  # Oculta la ventana principal
@@ -233,8 +233,7 @@ def crear_ventana_asignar_datos():
     marco_botones.pack(pady=10)
     
     ctk.CTkButton(marco_botones, text="Guardar", command=guardar_datos).pack(side="left", padx=5)
-    ctk.CTkButton(marco_botones, text="Cancelar", command=ventana.destroy).pack(side="left", padx=5)
-
+    ctk.CTkButton(marco_botones, text="Volver", command=lambda: cerrar_ventana_secundaria(ventana)).pack(side="left", padx=5)
 
 def crear_ventana_reservas():
     ventana_principal.withdraw()
