@@ -83,20 +83,22 @@ def book_flight(row,column,index): #version convencional de reservar individualm
     lenght_column = len(matrix[0])
     taking_seats = flights[index][-1]
     
+    if flights[index][0] != "":
+        if row >= lenght_row or column >= lenght_column or row < 0 or column < 0:
+            return f"Ingrese un valor dentro del rango."
+        
+        for _ in range(len(matrix)):
+            for _ in range(len(matrix[0])):
 
-    if row >= lenght_row or column >= lenght_column or row < 0 or column < 0:
-        return f"Ingrese un valor dentro del rango."
-    
-    for _ in range(len(matrix)):
-        for _ in range(len(matrix[0])):
-
-            if matrix[row][column] == 0:  #if the number keep going 0 get chance it by 1
-                matrix[row][column] = 1
-                
-                return "Asiento reservado"
-                
-            else:
-                return "El campo esta ocupado"
+                if matrix[row][column] == 0:  #if the number keep going 0 get chance it by 1
+                    matrix[row][column] = 1
+                    
+                    return "Asiento reservado"
+                    
+                else:
+                    return "El campo esta ocupado"
+    else:
+        return f"Por favor asigna el origen, destino, codigo y precio al vuelo {index+1}"
 
 #E: integer and matrix
 #S: boolean value
@@ -118,37 +120,39 @@ def book_consutive_seats(index_flight,row, start_colum, amount_seats):
 
     column_matrix = len(matrix[0])
     seats_free = 0
-    
-    if not isinstance(index_flight, int) or not isinstance(amount_seats, int): #si no es un entero
-        return "Error: número de vuelo y cantidad deben ser enteros."
-    
-    if index_flight < 0 or index_flight >= len(flights): #si se el parametro ingresado 
-        return "Error: el vuelo no existe."                 #no esta en el rango
+    if flights[index_flight][0]  != '':
+        if not isinstance(index_flight, int) or not isinstance(amount_seats, int): #si no es un entero
+            return "Error: número de vuelo y cantidad deben ser enteros."
+        
+        if index_flight < 0 or index_flight >= len(flights): #si se el parametro ingresado 
+            return "Error: el vuelo no existe."                 #no esta en el rango
 
-    
-    if all_are_one(row, matrix): #si todos son uno tira error
-        return "Todos los asientos están ocupados"
-    
-    if amount_seats > column_matrix or amount_seats <= 0:#si a cantidad es mayor o menor a cero
-        return "Error: cantidad de asientos inválida."
+        
+        if all_are_one(row, matrix): #si todos son uno tira error
+            return "Todos los asientos están ocupados"
+        
+        if amount_seats > column_matrix or amount_seats <= 0:#si a cantidad es mayor o menor a cero
+            return "Error: cantidad de asientos inválida."
 
-    if start_colum + amount_seats > column_matrix: #si se sale de rango
-        return "Error: no hay espacio suficiente en esa fila."
-
-    for i in range(start_colum, start_colum + amount_seats):
-    
-        if matrix[row][i] == 0:
-            seats_free += 1
-        else:
-            break
-    
-    if seats_free == amount_seats:
+        if start_colum + amount_seats > column_matrix: #si se sale de rango
+            return "Error: no hay espacio suficiente en esa fila."
 
         for i in range(start_colum, start_colum + amount_seats):
-            matrix[row][i] = 1
-        return "Reservados exitosamente"
+        
+            if matrix[row][i] == 0:
+                seats_free += 1
+            else:
+                break
+        
+        if seats_free == amount_seats:
+
+            for i in range(start_colum, start_colum + amount_seats):
+                matrix[row][i] = 1
+            return "Reservados exitosamente"
+        else:
+            return "No se pudo reservar los asientos exitosamamente"
     else:
-        return "No se pudo reservar los asientos exitosamamente"
+        return f"Por favor asigna el origen, destino, codigo y precio al vuelo {index_flight+1}"
 
 
 #E: row, column, index
@@ -180,7 +184,6 @@ def count_seat_matrix(matrix):
         for _ in range(len(matrix[0])):
             counter += 1
     return counter
-
 
 def simulate_mass_booking(flights, percentage):
     if not flights:
