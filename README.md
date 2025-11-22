@@ -2,8 +2,7 @@
 **Curso:** Introducción a la Programación  
 **Institución:** Instituto Tecnológico de Costa Rica (ITCR)  
 **Autor:** Mainor Olivier Martínez Sánchez  
-**Carné:** 2025094482  
-**Cédula:** 2-0897-0030  
+**Carné:** 2025094482   
 **Edad:** 18 años  
 
 ---
