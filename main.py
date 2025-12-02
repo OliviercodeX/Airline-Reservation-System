@@ -5,7 +5,7 @@ import logic_app as la
 
 # Ventana principal (variable global)
 ventana_principal = None
-
+#
 def mostrar_mensaje_info(mensaje):
     messagebox.showinfo("Información", mensaje)
 
